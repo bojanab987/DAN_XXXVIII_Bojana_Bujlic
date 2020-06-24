@@ -10,6 +10,12 @@ namespace Zadatak_1
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Routes are generating...");
+            Console.WriteLine("Manager selecting best routes...\n");
+            Truck truck = new Truck();
+            truck.PerformDelivery();
+
+            Console.ReadLine();
         }
     }
 }
