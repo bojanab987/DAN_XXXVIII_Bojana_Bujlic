@@ -29,8 +29,11 @@ namespace Zadatak_1
         //counter for threads 
         int counterEnter = 0, counterRestart=0;
 
-        //object for signaling threads
+        //object for signaling all threads
         public CountdownEvent countdown = new CountdownEvent(10);
+        //event for informing file handling
+        private AutoResetEvent anEvent = new AutoResetEvent(false);
+        
 
         /// <summary>
         /// Method for generating random route numbers and writing it into file Routes.txt
@@ -52,7 +55,7 @@ namespace Zadatak_1
                     }
                 }
                 //signal that writing in file is finished
-                Monitor.Pulse(routesFile);
+                anEvent.Set();
             }
         }
 
@@ -67,7 +70,7 @@ namespace Zadatak_1
                 //wait 3000 ms until file is created
                 while (!File.Exists(routesFile))
                 {
-                    Monitor.Wait(routesFile, 3000);
+                    anEvent.WaitOne();
                 }
 
                 //reading lines from file
